@@ -31,7 +31,7 @@ services:
     environment:
       - NODE_TLS_REJECT_UNAUTHORIZED=0
       - DATABASE_URL=postgresql://admin:admin@db:5432/userdb?schema=public
-      - NEXTAUTH_URL_INTERNAL=http://frontend
+      - NEXTAUTH_URL_INTERNAL=http://frontend:3000
       - NEXTAUTH_URL=https://plant.berlin
 
         #KEY CLOAK
