@@ -141,6 +141,7 @@ services:
       - ./certbot/data:/usr/share/nginx/html/letsencrypt
     depends_on:
       - frontend
+    entrypoint: /bin/sh
     networks:
       - internet
       - no-internet
