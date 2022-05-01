@@ -1,3 +1,40 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:42f84df69342b4c8774443c17fe84298543be0fce22549be8343bf5ea8c3171f
-size 1061
+import {
+    Controller,
+    Post, Path,
+    Route, Get, Delete, Header,
+} from "tsoa";
+import {getDependency} from "../DI";
+
+@Route("baumscheibe/account")
+export class Account extends Controller {
+    baumscheibenAccountService = getDependency("BaumscheibenAccountService");
+
+    @Get("/{accountId}")
+    public async getAccountInformation(
+        @Path() accountId: string,
+    ): Promise<any> {
+        return this.baumscheibenAccountService.getUser(accountId);
+    }
+
+    /**
+     * Internal API
+     * @param accountId
+     * @param username
+     */
+    @Post("/")
+    public async linkNewAccount(
+        @Header() accountId: string,
+        @Header("x-auth") username: string,
+    ): Promise<any> {
+        console.log('got auth request', username)
+        return this.baumscheibenAccountService.createUser(accountId);
+    }
+
+    @Delete("/")
+    public async unlinkAccount(
+        @Header() accountId: string,
+    ): Promise<any> {
+        return this.baumscheibenAccountService.createUser(accountId);
+    }
+
+}

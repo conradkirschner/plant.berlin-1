@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3e91e07592ee200ba46c034ffad2aa71db39e1308f427c2951597a6aedb0a2ec
-size 671
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+
+import {BaumscheibenAccount} from "./BaumscheibenAccount";
+import {Baumscheibe} from "./Baumscheibe";
+
+@Entity()
+export class Message {
+
+    @PrimaryGeneratedColumn()
+    id?: number;
+
+    @Column()
+    message?: string;
+
+    @ManyToOne(() => BaumscheibenAccount, baumscheibenAccount => baumscheibenAccount.messages)
+    from?: BaumscheibenAccount;
+
+    @ManyToOne(() => Baumscheibe, baumscheibe => baumscheibe.messages)
+    baumscheibe?: Baumscheibe;
+
+    @Column()
+    createdAt?: Date;
+
+    @Column()
+    encryption?: string;
+
+    @Column()
+    key?: string;
+
+}

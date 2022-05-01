@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:54460e4939ef00870516a9650a261234035f287b4eb489b6a2075554ed236b42
-size 555
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+
+import {BaumscheibenAccount} from "./BaumscheibenAccount";
+import {Baumscheibe} from "./Baumscheibe";
+
+@Entity()
+export class Picture {
+
+    @PrimaryGeneratedColumn()
+    id?: number;
+
+    @ManyToOne(() => BaumscheibenAccount, baumscheibenAccount => baumscheibenAccount.pictures)
+    from?: BaumscheibenAccount;
+
+    @ManyToOne(() => Baumscheibe, baumscheibe => baumscheibe.votes)
+    baumscheibe?: Baumscheibe;
+
+    @Column()
+    pictureLink?: string;
+
+
+}

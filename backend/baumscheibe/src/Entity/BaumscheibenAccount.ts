@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6f651114001f5ace139692fbd2da550ab0e91d7bbe93cb53b07e0b097681f2cf
-size 727
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+
+import {Vote} from "./Vote";
+import {Message} from "./Message";
+import {Picture} from "./Picture";
+import {Baumscheibe} from "./Baumscheibe";
+
+
+@Entity()
+export class BaumscheibenAccount {
+
+    @PrimaryGeneratedColumn()
+    id?: number;
+
+    @Column()
+    userId?: string;
+
+    @Column()
+    type?: string;
+
+    @OneToMany(() => Vote, vote => vote.from)
+    votes?: Vote[];
+
+    @OneToMany(() => Baumscheibe, baumscheibe => baumscheibe.createFrom )
+    baumscheiben?: Baumscheibe[];
+
+    @OneToMany(() => Message, messages => messages.from)
+    messages?: Message[];
+
+    @OneToMany(() => Picture, picture => picture.from)
+    pictures?: Picture[];
+}

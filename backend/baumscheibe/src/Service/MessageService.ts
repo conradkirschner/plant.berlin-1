@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6eaca25ebe6a04a4ae001884148f219e4ba252e1f5e8d08e73754ef78ccb14c0
-size 968
+import {getRepository} from "typeorm";
+import {getDependency} from "../DI";
+import {BaumscheibenAccountService} from "./BaumscheibenAccountService";
+
+import {Message} from "../Entity/Message";
+import {BaumscheibenAccount} from "../Entity/BaumscheibenAccount";
+import {Baumscheibe} from "../Entity/Baumscheibe";
+
+export class MessageService {
+
+    messagesRepository = getRepository(Message);
+    baumscheibenAccountService: BaumscheibenAccountService = getDependency("BaumscheibenAccountService");
+
+    addMessages = async (baumscheibe: Baumscheibe, user: BaumscheibenAccount, message: string,) => {
+        const newMessage = await this.messagesRepository.create({
+            message,
+            from: user,
+            baumscheibe: baumscheibe,
+            encryption: "none",
+            key: "",
+            createdAt: new Date()
+        })
+        await this.messagesRepository.save(newMessage);
+        return newMessage;
+    }
+
+}
+

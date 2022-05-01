@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:84708fbcccc543ff3aaa57b04e0fdc63d1f181dd73077915d1f41acf6f9104cc
-size 548
+module.exports = {
+   "type": "postgres",
+   "host": process.env.DB_HOST,
+   "port": process.env.DB_PORT,
+   "username": process.env.DB_USER,
+   "password": process.env.DB_PASS,
+   "database": process.env.DB_NAME,
+   "synchronize": true,
+   "logging": false,
+   "entities": ["./build/src/Entity/**/*.js"],
+   "migrations": ["./build/src/Migration/**/*.js"],
+   "subscribers": ["./build/src/Subscriber/**/*.js"],
+   "cli": {
+      "entitiesDir": "src/Entity",
+      "migrationsDir": "src/Migration",
+      "subscribersDir": "src/Subscriber"
+   }
+};

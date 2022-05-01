@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5915c8de85b3599817e26d47be0df22653615ccac3ef84198dfc48dbfc820ee2
-size 392
+import {GeoJSONLoaded} from "../Model/GeoJSON";
+
+interface IDictionary {
+    [index: string]: GeoJSONLoaded;
+}
+const cache:IDictionary= {};
+
+export const getGeoJSON = async (filename: string) => {
+    if (cache[filename]) {
+        return cache[filename];
+    }
+    cache[filename] = new GeoJSONLoaded(filename);
+    await cache[filename].load();
+    return cache[filename];
+}

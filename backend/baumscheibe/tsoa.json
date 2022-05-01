@@ -1,3 +1,58 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:80c14fde29375bac4d64419a8189b9f32296f6d785ea8cfa81af2816913d001c
-size 1446
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": [
+    "src/Controller/*.ts"
+  ],
+
+  "spec": {
+    "yaml": true,
+    "host": "localhost:3005",
+
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "specMerging": "recursive",
+    "spec": {
+      "paths": {
+        "/baumscheibe/{id}/pictures": {
+          "patch": {
+            "operationId": "UpdateBaumscheibePictures",
+            "responses": {
+              "200": {
+                "description": "Ok",
+                "content": {
+                  "application/json": {
+                    "schema": {}
+                  }
+                }
+              }
+            },
+            "security": [],
+            "requestBody": {
+              "content": {
+                "multipart/form-data": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "file": {
+                        "type": "string",
+                        "format": "binary"
+                      },
+                      "userId": {
+                        "type": "string",
+                        "format": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routes": {
+    "routesDir": "build"
+  }
+}

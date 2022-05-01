@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2314007605fa553344fcf489fbb31f11fd2d93fc4f3137241cecaa1fd38e4482
-size 406
+import axios from "axios";
+
+export const resolveAddress = async (streetname) => {
+    try {
+        const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(streetname)}&format=json&polygon=0&addressdetails=0`);
+        return [response?.data[0].lat, response?.data[0].lon];
+    } catch (e) {
+        throw new Error("Could not find address")
+    }
+
+}

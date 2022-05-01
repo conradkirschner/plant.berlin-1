@@ -1,3 +1,44 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:58ec83f7579b6fe80e093090c9e7389a2bd4b20f2d187dfd79c4ab995a2ccbff
-size 1391
+{
+  "name": "baumscheibenserver-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/src/server.js",
+  "scripts": {
+    "build": "rmdir build /s /q & tsoa spec-and-routes && tsc",
+    "start": "node build/src/server.js",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "db:migrate:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -n PostRefactoring",
+    "db:migrate:update": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run"
+  },
+  "author": "Conrad Magnus Kirschner",
+  "license": "ISC",
+  "dependencies": {
+    "@turf/boolean-point-in-polygon": "^6.5.0",
+    "@turf/turf": "^6.5.0",
+    "@types/body-parser": "^1.19.2",
+    "@types/d3": "^7.1.0",
+    "@types/express": "^4.17.13",
+    "@types/geojson": "^7946.0.8",
+    "body-parser": "^1.19.1",
+    "boundingbox": "^1.4.0",
+    "cors": "^2.8.5",
+    "d3": "^7.2.1",
+    "d3-node": "^2.2.3",
+    "d3-polygon": "^3.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "geojson-vt": "^3.2.1",
+    "multer": "^1.4.4",
+    "pg": "^8.7.1",
+    "reflect-metadata": "^0.1.13",
+    "tsconfig-paths": "^3.12.0",
+    "tsoa": "^3.14.1",
+    "typeorm": "^0.2.41",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/multer": "^1.4.7",
+    "@types/node": "^17.0.8",
+    "prisma": "^3.7.0"
+  }
+}

@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ea19ec6df305b0abdac3c5c9a504b423df247ffd58966ace47e0b8484e79f082
-size 360
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": [
+    "src/Controller/*.ts"
+  ],
+
+  "spec": {
+    "yaml": true,
+    "host": "localhost:3005",
+
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "specMerging": "recursive"
+  },
+  "routes": {
+    "routesDir": "build"
+  }
+}

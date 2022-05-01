@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dc8aac27e5045b5bf0696255dc2eeae55ed19a50183f351fd102ae79202ff5e6
-size 481
+FROM node:slim
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN #npm install
+# If you are building your code for production
+RUN npm install glob rimraf
+RUN npm i -g typeorm ts-node
+# Bundle app source
+COPY . .
+RUN npm install
+RUN npm run build
+
+EXPOSE 8080
+CMD npm run db:migrate:update && npm start

@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d41f9d8e13ef9884c40fb1019aef1edd761cfd75d880a78132f4c2d823744116
-size 1109
+{
+  "mitte": {
+      "link": "https://www.berlin.de/ba-mitte/politik-und-verwaltung/aemter/strassen-und-gruenflaechenamt/gruenflaechen/formular.606539.php"
+  },
+  "koepenick": {
+      "link": "https://www.berlin.de/ba-treptow-koepenick/politik-und-verwaltung/aemter/strassen-und-gruenflaechenamt/gruen/baeume/artikel.59916.php"
+  },
+  "friedrichshain": {
+      "link": "https://www.berlin.de/ba-friedrichshain-kreuzberg/politik-und-verwaltung/aemter/strassen-und-gruenflaechenamt/gruenflaechen/artikel.146174.php"
+  },
+  "charlottenburg": {
+      "link": "https://www.berlin.de/ba-charlottenburg-wilmersdorf/verwaltung/aemter/strassen-und-gruenflaechen/gruenflaechen/formular.1070961.php"
+  },
+  "lichtenberg": {
+      "link": "https://www.berlin.de/ba-charlottenburg-wilmersdorf/verwaltung/aemter/strassen-und-gruenflaechen/gruenflaechen/formular.1070961.php"
+  },
+  "tempelhof-schoeneberg": {
+      "link": "https://www.berlin.de/ba-tempelhof-schoeneberg/politik-und-verwaltung/aemter/strassen-und-gruenflaechenamt/gruenflaechen/artikel.912899.php"
+  },
+  "*": {
+    "link": ""
+  }
+}

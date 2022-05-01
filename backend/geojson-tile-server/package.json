@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:033b161a32c2f30cc924dbe020ada93f8f84d954ae31a664bb9be8ff1ce620fc
-size 969
+{
+  "name": "geojson-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/src/server.js",
+  "scripts": {
+    "build": "rmdir build /s /q & tsoa spec-and-routes && tsc",
+    "start": "set NODE_OPTIONS=--max_old_space_size=8096 && node build/src/server.js"
+  },
+  "author": "Conrad Magnus Kirschner",
+  "license": "ISC",
+  "dependencies": {
+    "@turf/boolean-point-in-polygon": "^6.5.0",
+    "@turf/turf": "^6.5.0",
+    "@types/d3": "^7.1.0",
+    "@types/geojson": "^7946.0.8",
+    "axios": "^0.25.0",
+    "body-parser": "^1.19.1",
+    "boundingbox": "^1.4.0",
+    "cors": "^2.8.5",
+    "d3": "^7.2.1",
+    "d3-node": "^2.2.3",
+    "d3-polygon": "^3.0.1",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "geojson-vt": "^3.2.1",
+    "reflect-metadata": "^0.1.13",
+    "tsoa": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.7",
+    "typescript": "^4.5.4"
+  }
+}

@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:81d9417deb4f5b145f60962efd984ebd6c5e1441e6dfd526f2b33903efbabf94
-size 288
+import "reflect-metadata";
+
+
+
+import '../styles/globals.css'
+import { SessionProvider } from "next-auth/react"
+
+function MyApp({session, Component, pageProps }) {
+  return (<SessionProvider session={session}>
+    <Component {...pageProps} />
+  </SessionProvider>)
+}
+
+export default MyApp

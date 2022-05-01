@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6ce34782d0043d408495416e791dbc71f4797d14c7e581459b86aaef60b3e84a
-size 1503
+export const BaseDataTab = ({namenr, hausnr, bezirk, kennzeich, pflanzjahr, standalter, eigentuemer, kronedurch, stammumfg}) => {
+    return (<>
+        <div style={{gap: "20px"}} className={"w-full inline-flex flex-wrap gap-32 text-center"}>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Straße</div>
+                <div>{namenr} {hausnr}</div>
+            </div>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Bezirksamt</div>
+                <div>{bezirk} </div>
+            </div>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Kennzeichen</div>
+                <div>{kennzeich}</div>
+            </div>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Pflanzjahr (Standalter)</div>
+                <div>{pflanzjahr} ({standalter})</div>
+            </div>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Eigentümer</div>
+                <div>{eigentuemer} </div>
+            </div>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Kronendurchmesser</div>
+                <div>{kronedurch} m</div>
+            </div>
+            <div className={"w-full mt-5"}>
+                <div className={"font-bold"}>Stammumfang</div>
+                <div>{stammumfg} cm</div>
+            </div>
+        </div>
+    </>);
+
+}

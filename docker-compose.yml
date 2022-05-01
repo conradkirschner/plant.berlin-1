@@ -1,3 +1,158 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fcd82ab977367d25a8bbce6b34f86b138db73618b55542d521f54d788174d7b5
-size 4260
+version: '3.9'
+
+volumes:
+  geoserver-data:
+  postgres:
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '5432:5432'
+    restart: on-failure
+    networks:
+      - no-internet
+    healthcheck:
+      test: 'exit 0'
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend/with-typescript-app/.
+      dockerfile:  ./Dockerfile
+    restart: always
+    environment:
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+      - DATABASE_URL=postgresql://admin:admin@db:5432/userdb?schema=public
+      - NEXTAUTH_URL_INTERNAL=http://frontend
+      - NEXTAUTH_URL=https://plant.berlin
+
+        #KEY CLOAK
+      - KEYCLOAK_ID=frontend
+      - KEYCLOAK_SECRET=MXWxFxeTuAaT4wIUYOyu84PCU4UJ9Ji6
+      - KEYCLOAK_ISSUER=http://localhost:8080/auth/realms/master
+
+        # FB
+      - FACEBOOK_CLIENT_ID=1095427214621988
+      - FACEBOOK_CLIENT_SECRET=99cfb0d281cbc647422fd11803d1e002
+
+        # Services
+      - BAUMSCHEIBEN_SERVICE_SERVER=http://baumscheiben-service:3005
+      - USER_SERVICE_SERVER=http://user-service:3006
+      - TILES_SERVICE_SERVER=http://tile-service:3007
+    networks:
+      - no-internet
+    depends_on:
+      - db
+      - user-service
+      - baumscheiben-service
+      - tile-service
+
+#Backend Services
+  user-service:
+    container_name: user-service
+    build:
+      context: ./backend/user-service/.
+      dockerfile:  ./Dockerfile
+    environment:
+      # Server settings
+      - APP_PORT=3006
+      - PICTURE_PATH=./pictures
+
+      # PW Encryption
+      - SECRET=fihudfhiudhfiuhdfihfdfihudfhiudhfiuhdfihfdfihudfhiudhfiuhdfihfd
+      # DB
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=userdb
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASS}
+      # Services
+      - BAUMSCHEIBEN_SERVICE=http://baumscheiben-service:3005
+      - INTERNAL_API_TOKEN_BAUMSCHEIBEN_SERVICE=2uiufhu9i8hfe498f984h398qhfi9he98743hf98hjfg987h4798q98
+    depends_on:
+      - db
+    networks:
+      - no-internet
+    ports:
+      - '3006'
+  baumscheiben-service:
+    container_name: baumscheiben-service
+    build:
+      context: ./backend/baumscheibe/.
+      dockerfile:  ./Dockerfile
+    environment:
+      # Server settings
+      - APP_PORT=3005
+      - PICTURE_TEMP_PATH=./tmp
+      - PICTURE_UPLOAD_PATH=./pictures
+      # DB
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=baumscheibe
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASS}
+      # Services
+      - BAUMSCHEIBEN_SERVICE=http://baumscheiben-service:3005
+      - INTERNAL_API_TOKEN_BAUMSCHEIBEN_SERVICE=2uiufhu9i8hfe498f984h398qhfi9he98743hf98hjfg987h4798q98
+    networks:
+      - no-internet
+    depends_on:
+      - db
+      - tile-service
+    ports:
+      - '3005'
+  tile-service:
+    container_name: tile-service
+    build:
+      context: ./backend/geojson-tile-server/.
+      dockerfile:  ./Dockerfile
+    restart: always
+    environment:
+      # Server settings
+      - APP_PORT=3007
+      # Baumscheiben Service
+      - BAUMSCHEIBEN_SERVICE_URL=http://baumscheiben-service:3005
+    depends_on:
+      - db
+    networks:
+      - no-internet
+    ports:
+      - '3007'
+  nginx:
+    image: nginx:1.21.6-alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/public_html:/public_html
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/dhparam:/etc/nginx/dhparam
+      - ./nginx/static:/var/www/static
+      - ./certbot/conf:/etc/nginx/ssl
+      - ./certbot/data:/usr/share/nginx/html/letsencrypt
+    depends_on:
+      - frontend
+    networks:
+      - internet
+      - no-internet
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/conf/:/etc/letsencrypt
+      - ./certbot/logs/:/var/log/letsencrypt
+      - ./certbot/data:/usr/share/nginx/html/letsencrypt
+networks:
+  no-internet:
+    driver: bridge
+    internal: true
+  internet:
+    driver: bridge

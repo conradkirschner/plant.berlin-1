@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0fe807b4ff21c5c2af090cf2a6a1f1eb9a38e1232048f2e8ca57d16f302f7175
-size 397
+export const GalleryImage = ({imageURL}) => {
+    return (
+        <div className="w-full rounded">
+            <img
+                // src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=989&q=80"
+                src={imageURL}
+                alt="image"/>
+        </div>
+    );
+
+}

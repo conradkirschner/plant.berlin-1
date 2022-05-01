@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8a7c6239e391b2d4f19646dd2947e073fdaf9709fe878892e6e09b187335553b
-size 631
+import {BaumscheibenService} from "./Service/BaumscheibenService";
+import {BaumscheibenAccountService} from "./Service/BaumscheibenAccountService";
+import {PictureService} from "./Service/PictureService";
+import {VoteService} from "./Service/VoteService";
+import {MessageService} from "./Service/MessageService";
+
+const dependencies: any = [];
+
+export const getDependency = (key: string) => {
+    return dependencies[key];
+}
+export const setDependency = (key: string, dependency: BaumscheibenService| BaumscheibenAccountService| PictureService| VoteService| MessageService) => {
+    dependencies[key] = dependency;
+}

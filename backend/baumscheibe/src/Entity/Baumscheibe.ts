@@ -1,3 +1,41 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a50fad4d836e5ae60f4c9a1ed18f85dc7c21c590e74a4a3752a055afce2e0ab5
-size 1079
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from "typeorm";
+
+import {Message} from "./Message";
+import {Vote} from "./Vote";
+import {BaumscheibenAccount} from "./BaumscheibenAccount";
+import {Picture} from "./Picture";
+
+export enum BaumscheibenTypes {
+    isEmpty,
+    notAllowed,
+    isPlanted,
+    notDefined,
+}
+@Entity()
+export class Baumscheibe {
+
+    @PrimaryGeneratedColumn()
+    id?: number;
+
+    @Column()
+    baumid?: string;
+
+    @Column('int')
+    type?: BaumscheibenTypes;
+
+    @OneToMany(() => Picture, picture => picture.baumscheibe, { cascade: ['insert', 'update'] })
+    pictures?: Picture[];
+
+    @OneToMany(() => Vote, vote => vote.to, { cascade: ['insert', 'update'] })
+    votes?: Vote[];
+
+    @OneToMany(() => Message, message => message.baumscheibe, { cascade: ['insert', 'update'] })
+    messages?: Message[];
+
+    @ManyToOne(() => BaumscheibenAccount, baumscheibenAccount => baumscheibenAccount.baumscheiben )
+    createFrom?: BaumscheibenAccount;
+
+    @Column()
+    createdAt?: Date;
+
+}

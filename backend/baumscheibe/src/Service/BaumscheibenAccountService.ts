@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3cf87210e212044f5e330bce357e47a77e3b3a82f8f1c41b2587557edddcd326
-size 919
+import {getRepository} from "typeorm";
+import {BaumscheibenAccount} from "../Entity/BaumscheibenAccount";
+
+export class BaumscheibenAccountService {
+    baumscheibenAccountRepository = getRepository(BaumscheibenAccount);
+
+    createUser = async (userId: string, type="user") => {
+        const result = await this.baumscheibenAccountRepository.findOne({userId});
+        if (!result) {
+            const newAccount = this.baumscheibenAccountRepository.create({
+                userId: userId,
+                type: type
+            })
+            await this.baumscheibenAccountRepository.save(newAccount);
+        }
+        return "";
+    }
+    getUser = async (userId: string) => {
+        return await this.baumscheibenAccountRepository.findOne({userId});
+    }
+
+    deleteUser = async (userId: string) => {
+        return await this.baumscheibenAccountRepository.delete({userId});
+    }
+
+}

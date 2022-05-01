@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c0c1096c618b79d29bb8241be89708629d1e1627c0dbf757db92a80dba9bbc8d
-size 360
+export const serviceMap = {
+    BaumscheibenService: {
+        name: 'baumscheibe',
+        server: process.env.BAUMSCHEIBEN_SERVICE_SERVER,
+    },
+    UserService: {
+        name: 'user',
+        server: process.env.USER_SERVICE_SERVER,
+    },
+    TileService: {
+        name: 'tiles',
+        server: process.env.TILES_SERVICE_SERVER,
+    }
+};

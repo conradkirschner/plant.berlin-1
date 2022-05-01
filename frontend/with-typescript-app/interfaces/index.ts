@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:38b3e4ef5e84d775ca11edca7647c5396f49c4e1b9084e9002b92c3b078d622f
-size 270
+// You can include shared interfaces/types in a separate file
+// and then use them in any component by importing them. For
+// example, to import the interface below do:
+//
+// import { User } from 'path/to/interfaces';
+
+export type User = {
+  id: number
+  name: string
+}
